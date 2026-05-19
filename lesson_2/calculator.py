@@ -4,50 +4,79 @@
 # Perform the operation on the two numbers
 # Print the result on the terminal
 
+import json
+
+
+
+# Open the JSON file for reading
+with open('file.json', 'r') as file:
+    messages = json.load(file)
+
 def prompt(message):
     print(f"===> {message}")
 
 def invalid(number_str):
     try:
-        int(number_str)
+        float(number_str)
     except ValueError:
         return True
     return False
 
-prompt('Welcome to Calculator!')
+def message(message, lang='en'):
+    return messages[lang][message]
 
-prompt("What's is the first number? ")
-number1 = input()
+answer = 'yes'
 
-while invalid(number1):
-    prompt("Hmm... that doesn't look like a valid number.")
+prompt('What language would you like to speak? (eng/esp)')
+language = input()
+while language not in ('eng', 'esp'):
+    prompt('You should specify eng or esp')
+    language = input()
+
+
+prompt(message("1", language))
+
+while answer == 'yes':
+    prompt(message("2", language))
     number1 = input()
 
+    while invalid(number1):
+        prompt(message("3", language))
+        number1 = input()
 
-prompt("What's is the second number? ")
-number2 = input()
 
-while invalid(number2):
-    prompt("Hmm... that doesn't look like a valid number.")
+    prompt(message("4", language))
     number2 = input()
 
-prompt('''What operation would you like to perform?
-1)Add 2)Substract 3)Multiply 4)Divide ''')
+    while invalid(number2):
+        prompt(message("3", language))
+        number2 = input()
 
-operation = input()
+    prompt(message("5", language))
 
-while operation not in ['1', '2', '3', '4']:
-    prompt('You must choose 1, 2, 3, 4')
     operation = input()
 
-match operation:
-    case '1':
-        output = int(number1) + int(number2)
-    case '2':
-        output = int(number1) - int(number2)
-    case '3':
-        output = int(number1) * int(number2)
-    case '4':
-        output = int(number1) / int(number2)
+    while operation not in ['1', '2', '3', '4']:
+        prompt(message("6", language))
+        operation = input()
 
-prompt(f'The result is {output}')
+    match operation:
+        case '1':
+            output = float(number1) + float(number2)
+        case '2':
+            output = float(number1) - float(number2)
+        case '3':
+            output = float(number1) * float(number2)
+        case '4':
+            output = float(number1) / float(number2)
+
+    prompt(f'{message("9", language)} {output}')
+
+    prompt(message("7", language))
+    answer = input()
+
+    while answer not in ('yes', 'no'):
+        prompt(message("8", language))
+        answer = input()
+
+        

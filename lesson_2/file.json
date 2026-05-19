@@ -1,0 +1,25 @@
+{"eng":{
+    "1":"Welcome to Calculator!" , 
+    "2":"What's is the first number? ",
+    "3":"Hmm... that doesn't look like a valid number." ,
+    "4":"What's is the second number? " ,
+    "5": "What operation would you like to perform?\n1)Add 2)Substract 3)Multiply 4)Divide " , 
+    "6":"You must choose 1, 2, 3, 4" , 
+    "7":"Would you like to do a new calculation? (yes/no)", 
+    "8":"You must choose yes or no ",
+    "9": "The result is"
+    },
+"esp":{
+    "1":"Bienvenido a la calculadora!" , 
+    "2":"¿ Cual es tu primer número ? ",
+    "3":"Hmm... no parece que sea un número válido." ,
+    "4":"¿Cual es el segundo número? " ,
+    "5": "¿Qué operación te gustaría realizae?\n1)Suma 2)Resta 3)Multiplicación 4)División " , 
+    "6":"Debes elegir 1, 2, 3, 4" , 
+    "7":"Te gustaría realizar un nuevo cálculo? (yes/no)", 
+    "8":"Debes elegir yes o no ",
+    "9": "El resultado es"
+    }
+ 
+
+}

@@ -1,0 +1,8 @@
+{
+    "welcome": "Welcome to the Car Loan Calculator! \nHere we will calculate the monthly payments you need to make",
+    "loan_amount":"First I need you to introduce the loan amount",
+    "annual_rate": "Now please introduce the Annual Percentage Rate (APR) in %, \nfor example is it's a 5% please introduce 5",
+    "duration": "Introduce the loan duration in decimal years (e.g 2.5 years is 2 years and 6 months)",
+    "error_number": "Hmm... that doesn't look like a valid number. Please try again",
+    "final": "The payment per month will be: $"
+}

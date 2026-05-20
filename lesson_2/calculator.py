@@ -12,8 +12,8 @@ import json
 with open('file.json', 'r') as file:
     messages = json.load(file)
 
-def prompt(message):
-    print(f"===> {message}")
+def prompt(mesage):
+    print(f"===> {mesage}")
 
 def invalid(number_str):
     try:
@@ -22,8 +22,8 @@ def invalid(number_str):
         return True
     return False
 
-def message(message, lang='en'):
-    return messages[lang][message]
+def message(mesage, lang='en'):
+    return messages[lang][mesage]
 
 answer = 'yes'
 
@@ -78,5 +78,6 @@ while answer == 'yes':
     while answer not in ('yes', 'no'):
         prompt(message("8", language))
         answer = input()
+
 
         

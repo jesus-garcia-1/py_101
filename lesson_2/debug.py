@@ -1,9 +1,22 @@
-# Scratchpad - try out your code here
-def lower_first(word):
-    return word[0].lower() + word[1:]
-    
-    # except (TypeError, IndexError):
-        # return word  # Handle exceptions by returning `word` as-is
+# So the condition if user_input: is really if "0":, which is True.
 
-print(lower_first("FOO"))  # Output: "fOO"
-print(lower_first(32))     # Output: "32"
+# Let’s do a small applied coding problem with this idea.
+
+# Write a short snippet (you can just type the code, no need to run it) that:
+
+#     Asks the user for a number.
+#     Safely tries to convert it to int.
+#     If conversion works, prints "Valid number" and the integer.
+#     If conversion fails, prints "Invalid input".
+
+# Use try / except and int().
+
+
+number = input('Introduce a number ')
+
+try:
+    transform_number = int(number)
+    print('Valid number:', transform_number)
+
+except (ValueError, TypeError):
+    print('Invalid input')

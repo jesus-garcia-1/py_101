@@ -4,7 +4,7 @@ import time
 
 VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 counter = {'user': 0 , 'computer': 0}
-WINING_COMBOS = {
+WINNING_COMBOS = {
     'rock': ['scissors', 'lizard'],
     'paper': ['rock', 'spock'],
     'scissors': ['paper', 'lizard'],
@@ -33,7 +33,7 @@ def get_choice(user_string):
 
 
 def player_wins(player_choice, computer):
-    return computer in WINING_COMBOS[player_choice]
+    return computer in WINNING_COMBOS[player_choice]
 
 def display_winner(play_choice, computer):
     if player_wins(play_choice, computer):
@@ -48,36 +48,46 @@ def game_ends(points):
 
 def display_max_winner(point):
     if point['user'] == MAX_POINTS:
-        prompt(f'You are the max winner, you obtained {point['user']} points '
-        f'and the computer obtained {point['computer']} points')
+        prompt(f"You are the max winner, you obtained {point['user']} points "
+        f"and the computer obtained {point['computer']} points")
 
     if point['computer'] == MAX_POINTS:
-        prompt(f'Computer is the max winner, you obtained {point['user']} '
-        f'points and the computer obtained {point['computer']} points')
+        prompt(f"Computer is the max winner, you obtained {point['user']} "
+        f"points and the computer obtained {point['computer']} points")
 
 def clear_screen():
     os.system('clear' if os.name == 'posix' else 'cls')
 
-def get_validated_choice(user_answer):
 
-    while user_answer not in VALID_CHOICES :
+def get_validated_choice():
+    user_answer = input()
+    transform_answer = get_choice(user_answer)
+
+    while transform_answer not in VALID_CHOICES :
         prompt("That's not a valid choice, please try again")
         user_selection = input()
-        user_answer = get_choice(user_selection)
+        transform_answer = get_choice(user_selection)
 
-    return user_answer
+    return transform_answer
+
+def play_again():
+    while True:
+        prompt('Do you want to play another game? ( y/n )')
+        answer = input().lower().strip()
+        if answer.startswith('y') or  answer.startswith('n'):
+            return  answer.startswith('y')
+
+        prompt("That's not a valid answer")
+
 
 clear_screen()
 prompt('Welcome to Rock, Paper, Scissors, Lizard, Spock')
+
 while True:
     prompt(f'Choose one: {', '.join(VALID_CHOICES)} '
             'you can write just the first letters')
 
-    user_choice = input()
-    choice = get_choice(user_choice)
-
-    choice = get_validated_choice(choice)
-
+    choice = get_validated_choice()
     computer_choice = random.choice(VALID_CHOICES)
 
     prompt(f'You chose {choice}, the computer chose {computer_choice}')
@@ -95,18 +105,10 @@ while True:
 
     if game_ends(counter):
         display_max_winner(counter)
-        prompt('Do you want to play another game? ( y/n )')
-        answer = input().lower().strip()
 
-        while True:
-            if answer.startswith('y') or  answer.startswith('n'):
-                break
-
-            prompt("That's not a valid answer")
-            prompt('Do you want to play another game? ( y/n )')
-            answer = input().lower().strip()
+        if not play_again():
+            break
 
         counter = {'user': 0 , 'computer': 0}
 
-        if answer[0] == 'n':
-            break
+        

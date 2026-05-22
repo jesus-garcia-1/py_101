@@ -17,15 +17,17 @@ def prompt(message):
     print(f"==> {message}")
 
 def get_choice(user_string):
-    if user_string.lower().strip().startswith('r'):
+    user_string = user_string.lower().strip()
+
+    if user_string.startswith('r'):
         return 'rock'
-    if user_string.lower().strip().startswith('sc'):
+    if user_string.startswith('sc'):
         return 'scissors'
-    if user_string.lower().strip().startswith('sp'):
+    if user_string.startswith('sp'):
         return 'spock'
-    if user_string.lower().strip().startswith('l'):
+    if user_string.startswith('l'):
         return 'lizard'
-    if user_string.lower().strip().startswith('p'):
+    if user_string.startswith('p'):
         return 'paper'
     return False
 
@@ -46,31 +48,30 @@ def game_ends(points):
 
 def display_max_winner(point):
     if point['user'] == MAX_POINTS:
-        prompt(f'''You are the max winner, you obtained {point['user']} points
-        and the computer obtained {point['computer']} points''')
+        prompt(f'You are the max winner, you obtained {point['user']} points '
+        f'and the computer obtained {point['computer']} points')
 
     if point['computer'] == MAX_POINTS:
-        prompt(f'''Computer is the max winner, you obtained {point['user']}
-        points and the computer obtained {point['computer']} points''')
+        prompt(f'Computer is the max winner, you obtained {point['user']} '
+        f'points and the computer obtained {point['computer']} points')
 
 def clear_screen():
-    os.system('clear')
+    os.system('clear' if os.name == 'posix' else 'cls')
 
 def get_validated_choice(user_answer):
 
     while user_answer not in VALID_CHOICES :
         prompt("That's not a valid choice, please try again")
-        user_choicee = input()
-        user_answer = get_choice(user_choicee)
+        user_selection = input()
+        user_answer = get_choice(user_selection)
 
     return user_answer
 
 clear_screen()
-prompt('Welcome  back to Rock, Paper, Scissors, Lizard, Spock')
+prompt('Welcome to Rock, Paper, Scissors, Lizard, Spock')
 while True:
-    answer = 'yes'
-    prompt(f'''Choose one: {', '.join(VALID_CHOICES)},
-    you can write just the first letters''')
+    prompt(f'Choose one: {', '.join(VALID_CHOICES)} '
+            'you can write just the first letters')
 
     user_choice = input()
     choice = get_choice(user_choice)
@@ -87,8 +88,8 @@ while True:
     elif choice != computer_choice:
         counter['computer'] +=1
 
-    prompt(f'''Current score - You: {counter['user']},
-    Computer: {counter['computer']} ''')
+    prompt(f'Current score - You: {counter['user']} '
+            f'Computer: {counter['computer']} ')
     time.sleep(2)
     clear_screen()
 
@@ -107,5 +108,5 @@ while True:
 
         counter = {'user': 0 , 'computer': 0}
 
-    if answer[0] == 'n':
-        break
+        if answer[0] == 'n':
+            break

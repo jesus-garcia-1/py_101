@@ -1,16 +1,21 @@
 import random
 import os
 import time
+import json
 
-VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+with open('26.rock_paper_scissors/messages.json', 'r') as file:
+    messages = json.load(file)
+
+MOVES = {
+    'rock': { 'abbreviation': 'r', 'beats': ['scissors', 'lizard']},
+    'lizard': { 'abbreviation': 'l', 'beats': ['spock', 'paper']},
+    'spock': { 'abbreviation': 'sp', 'beats': ['scissors', 'rock']},
+    'paper': { 'abbreviation': 'p', 'beats': ['spock', 'rock']},
+    'scissors': { 'abbreviation': 'sc', 'beats': ['paper', 'lizard']}
+  }
+
+
 counter = {'user': 0 , 'computer': 0}
-WINNING_COMBOS = {
-    'rock': ['scissors', 'lizard'],
-    'paper': ['rock', 'spock'],
-    'scissors': ['paper', 'lizard'],
-    'lizard': ['paper', 'spock'],
-    'spock': ['rock', 'scissors'],
-}
 MAX_POINTS = 3
 
 def prompt(message):
@@ -19,21 +24,20 @@ def prompt(message):
 def get_choice(user_string):
     user_string = user_string.lower().strip()
 
-    if user_string.startswith('r'):
+    if user_string.startswith(MOVES['rock']['abbreviation']):
         return 'rock'
-    if user_string.startswith('sc'):
+    if user_string.startswith(MOVES['scissors']['abbreviation']):
         return 'scissors'
-    if user_string.startswith('sp'):
+    if user_string.startswith(MOVES['spock']['abbreviation']):
         return 'spock'
-    if user_string.startswith('l'):
+    if user_string.startswith(MOVES['lizard']['abbreviation']):
         return 'lizard'
-    if user_string.startswith('p'):
+    if user_string.startswith(MOVES['paper']['abbreviation']):
         return 'paper'
     return False
 
-
 def player_wins(player_choice, computer):
-    return computer in WINNING_COMBOS[player_choice]
+    return computer in MOVES[player_choice]['beats']
 
 def display_winner(play_choice, computer):
     if player_wins(play_choice, computer):
@@ -58,13 +62,12 @@ def display_max_winner(point):
 def clear_screen():
     os.system('clear' if os.name == 'posix' else 'cls')
 
-
 def get_validated_choice():
     user_answer = input()
     transform_answer = get_choice(user_answer)
 
-    while transform_answer not in VALID_CHOICES :
-        prompt("That's not a valid choice, please try again")
+    while transform_answer not in MOVES :
+        prompt(messages['not_valid'])
         user_selection = input()
         transform_answer = get_choice(user_selection)
 
@@ -72,23 +75,20 @@ def get_validated_choice():
 
 def play_again():
     while True:
-        prompt('Do you want to play another game? ( y/n )')
+        prompt(messages["another_game?"])
         answer = input().lower().strip()
         if answer.startswith('y') or  answer.startswith('n'):
             return  answer.startswith('y')
 
-        prompt("That's not a valid answer")
+        prompt(messages['not_valid'])
 
+def play_one_round():
 
-clear_screen()
-prompt('Welcome to Rock, Paper, Scissors, Lizard, Spock')
-
-while True:
-    prompt(f'Choose one: {', '.join(VALID_CHOICES)} '
+    prompt(f'Choose one: {', '.join(list(MOVES))} '
             'you can write just the first letters')
 
     choice = get_validated_choice()
-    computer_choice = random.choice(VALID_CHOICES)
+    computer_choice = random.choice(list(MOVES))
 
     prompt(f'You chose {choice}, the computer chose {computer_choice}')
     display_winner(choice, computer_choice)
@@ -100,6 +100,14 @@ while True:
 
     prompt(f'Current score - You: {counter['user']} '
             f'Computer: {counter['computer']} ')
+
+clear_screen()
+prompt(messages["welcome"])
+prompt(messages["n_rounds"])
+
+while True:
+    play_one_round()
+
     time.sleep(2)
     clear_screen()
 

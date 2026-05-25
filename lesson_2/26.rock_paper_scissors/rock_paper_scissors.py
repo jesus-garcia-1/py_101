@@ -103,7 +103,6 @@ def play_one_round():
 
 clear_screen()
 prompt(messages["welcome"])
-prompt(messages["n_rounds"])
 
 while True:
     play_one_round()
